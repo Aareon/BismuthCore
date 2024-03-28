@@ -143,8 +143,9 @@ def keys_load(privkey="privkey.der", pubkey="pubkey.der"):
         # print ("loaded",privkey, pubkey)
         # import keys
         try:  # unencrypted
-            key = RSA.importKey(open(privkey).read())
-            private_key_readable = key.exportKey ().decode ("utf-8")
+            with open(privkey, 'r') as keyfile:
+                key =  RSA.importKey(keyfile.read())
+            private_key_readable = key.exportKey().decode ("utf-8")
             # public_key = key.publickey()
             encrypted = False
             unlocked = True
@@ -153,10 +154,12 @@ def keys_load(privkey="privkey.der", pubkey="pubkey.der"):
             encrypted = True
             unlocked = False
             key = None
-            private_key_readable = open(privkey).read()
+            with open(privkey, 'r') as keyfile:
+                private_key_readable = keyfile.read()
 
         # public_key_readable = str(key.publickey().exportKey())
-        public_key_readable = open(pubkey.encode('utf-8')).read()
+        with open(pubkey, 'r') as keyfile:
+            public_key_readable = keyfile.read()
 
         if (len(public_key_readable)) != 271 and (len(public_key_readable)) != 799:
             raise ValueError("Invalid public key length: {}".format(len(public_key_readable)))
