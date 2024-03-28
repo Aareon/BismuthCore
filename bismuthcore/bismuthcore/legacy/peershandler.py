@@ -194,9 +194,9 @@ class Peers:
 
                 else:
                     self.app_log.info("Distant peer already in peer list")
-            except:
+            except Exception as e:
+                self.app_log.debug("Distand peer not connectible. Error: {}".format(e))
                 self.app_log.info("Inbound: Distant peer not connectible")
-                pass
 
     def append_client(self, client):
         """
@@ -266,16 +266,18 @@ class Peers:
         """Consensus vote"""
         try:
             return most_common_dict(self.peer_opinion_dict)
-        except:
+        except Exception as e:
             # no consensus yet
+            self.app_log.debug("No consensus yet. Error: {}".format(e))
             return 0
 
     @property
     def consensus_max(self):
         try:
             return max(self.peer_opinion_dict.values())
-        except:
+        except Exception as e:
             # no consensus yet
+            self.app_log.debug("No consensus yet. Error: {}".format(e))
             return 0
 
     @property
@@ -321,12 +323,12 @@ class Peers:
                         s.connect((host, port))
                         s.close()
                         self.app_log.info(f"Connection to {host} {port} successful, keeping the peer")
-                    except:
+                    except Exception as e:
+                        self.app_log.debug(f"Connection to {host} {port} failed: {e}")
                         if self.config.purge_conf == 1 and not self.is_testnet:
                             # remove from peerfile if not connectible
 
                             peers_remove[key] = value
-                        pass
 
                 for key in peers_remove:
                     del peer_dict[key]
@@ -374,8 +376,8 @@ class Peers:
                             peers[pair[0]] = pair[1]
                             with open(self.peerfile, "w") as peer_file:
                                 json.dump(peers, peer_file)
-                        except:
-                            pass
+                        except Exception as e:
+                            self.app_log.debug(f"Connection to {pair[0]} {pair[1]} failed: {e}")
                             self.app_log.info("Not connectible")
                     else:
                         self.app_log.info(f"Outbound: {pair} is not a new peer")
@@ -399,8 +401,8 @@ class Peers:
                             if pair not in peers_suggested and pair not in peers:
                                 peers_suggested[pair[0]] = pair[1]
                             peers[pair[0]] = pair[1]
-                        except:
-                            pass
+                        except Exception as e:
+                            self.app_log.debug(f"Connection to {pair[0]} {pair[1]} failed: {e}")
                             self.app_log.info("Not connectible")
                     else:
                         self.app_log.info(f"Outbound: {pair} is not a new peer")
@@ -451,9 +453,9 @@ class Peers:
             self.app_log.info(f"Consensus opinion list: {self.peer_opinion_dict}")
             self.app_log.info(f"Will remove {peer_ip} from consensus pool {self.peer_opinion_dict}")
             self.peer_opinion_dict.pop(peer_ip)
-        except:
+        except Exception as e:
+            self.debug(f"Error removing {peer_ip} from consensus pool: {e}")
             self.app_log.info(f"IP of {peer_ip} not present in the consensus pool")
-            pass
         finally:
             self.consensus_lock.release()
 
@@ -470,9 +472,11 @@ class Peers:
         if host_port in self.connection_pool:
             return False  # Already connected to
         try:
-            tries, timeout = self.tried[host_port]
-        except:
-            tries, timeout = 0, 0  # unknown host for now, never tried.
+            tries, timeout = self.tried[host_port]  # noqa: F841
+        except Exception as e:
+            # unknown host for now, never tried.
+            self.app_log.debug(f"Error getting tries for {host_port}: {e}")
+            tries, timeout = 0, 0  # noqa: F841
         if timeout > time.time():
             return False  # We tried before, timeout is not expired.
         if self.is_whitelisted(host):
@@ -498,8 +502,9 @@ class Peers:
         host_port = host + ":" + str(port)
         try:
             tries, timeout = self.tried[host_port]
-        except:
-            tries, timeout = 0, 0
+        except Exception as e:
+            self.app_log.debug(f"Error getting tries for {host_port}: {e}")
+            tries, timeout = 0, 0  # noqa: F841
         if tries <= 0:  # First time can be temp, retry again
             delay = 30
         elif tries == 1:  # second time, give it 5 minutes

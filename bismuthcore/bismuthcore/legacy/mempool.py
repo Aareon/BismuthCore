@@ -299,7 +299,8 @@ class Mempool:
                 "Status: MEMPOOL {} Txs from {} senders to {} distinct recipients. Openfield len {}".
                     format(count, senders, recipients, open_len))
             return status[0]
-        except:
+        except Exception as e:
+            self.app_log.debug("Mempool status error: {}".format(e))
             return 0
 
     def size(self):
@@ -311,7 +312,8 @@ class Mempool:
             mempool_txs = self.fetchall(SQL_SELECT_ALL_TXS)
             mempool_size = sys.getsizeof(str(mempool_txs)) / 1000000.0
             return mempool_size
-        except:
+        except Exception as e:
+            self.app_log.debug("Mempool size error: {}".format(e))
             return 0
 
     def sent(self, peer_ip):
@@ -433,9 +435,9 @@ class Mempool:
                 self.app_log.warning("Mempool ignoring merge from frozen {}".format(peer_ip))
                 mempool_result.append("Mempool ignoring merge from frozen {}".format(peer_ip))
                 return mempool_result
-        except:
+        except Exception as e:
             # unknown peer
-            pass
+            self.app_log.debug("Mempool ignoring merge from unknown {}. Error: {}".format(peer_ip, e))
         if not essentials.is_sequence(data):
             if peer_ip != '127.0.0.1':
                 with self.peers_lock:
@@ -557,7 +559,8 @@ class Mempool:
                                 self.execute(SQL_DELETE_TX, (mempool_signature_enc,))
                                 self.commit()
                                 mempool_result.append("Mempool: Transaction deleted from our mempool")
-                            except:  # experimental try and except
+                            except Exception as e:  # experimental try and except
+                                self.app_log.debug("Mempool: Error deleting tx from mempool: {}".format(e))
                                 mempool_result.append("Mempool: Transaction was not present in the pool anymore")
                             continue
                         if ledger_in:

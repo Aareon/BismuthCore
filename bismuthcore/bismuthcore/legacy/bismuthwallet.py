@@ -44,10 +44,11 @@ class BismuthWallet():
             try:
                 key = RSA.importKey(content['Private Key'])
                 info['encrypted'] = False
-            except:  # encrypted
+            except Exception:  # encrypted
+                print("Wallet is encrypted")
                 info['encrypted'] = True
-        except:
-            pass
+        except Exception as e:
+            print("Unknown error occurred during wallet preview. Error: {}".format(e))
         return info
 
     def info(self):
@@ -79,7 +80,8 @@ class BismuthWallet():
         try:
             self.key = RSA.importKey(content['Private Key'])
             self.public_key = content['Public Key']
-        except:  # encrypted
+        except Exception:  # encrypted
+            print("Wallet is encrypted")
             self._infos['encrypted'] = True
 
     def new(self, wallet_file='wallet.der'):

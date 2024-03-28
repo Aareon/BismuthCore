@@ -150,7 +150,7 @@ def keys_load(privkey="privkey.der", pubkey="pubkey.der"):
             encrypted = False
             unlocked = True
 
-        except:  # encrypted
+        except Exception:  # encrypted
             encrypted = True
             unlocked = False
             key = None
@@ -196,7 +196,8 @@ def keys_load_new(keyfile="wallet.der"):
         encrypted = False
         unlocked = True
 
-    except:  # encrypted
+    except Exception:  # encrypted
+        print("Wallet is encrypted")
         encrypted = True
         unlocked = False
         key = None
