@@ -19,6 +19,17 @@ It's targeted toward clean and stable code, with tests and doc, rather than blee
 
 `pip3 install BismuthCore`
 
+## Development
+```sh
+py -m pip install pip -U  # Update pip
+py -m pip install poetry  # Install poetry
+poetry install  # Install project requirements & dev dependencies
+poetry shell  # Activate virtual environment
+ruff check  # Perform checks using ruff
+pytest  # Run tests
+```
+Please run tests with `pytest` and `ruff check` before submitting any changes.
+
 ## Current state
 
 Alpha - Do not use.
