@@ -79,10 +79,12 @@ def decrypt(password, data):
     return cipher.decrypt(raw[SALT_LEN[version] // 8:-HASH.digest_size])
 
 
-class DecryptionException(Exception): pass
+class DecryptionException(Exception):
+    pass
 
 
-class EncryptionException(Exception): pass
+class EncryptionException(Exception):
+    pass
 
 
 def _assert_not_unicode(data):
@@ -135,8 +137,10 @@ def _pbkdf2(password, salt, n_bytes, count):
 
 
 def _expand_keys(password, salt, expansion_count):
-    if not salt: raise ValueError('Missing salt.')
-    if not password: raise ValueError('Missing password.')
+    if not salt:
+        raise ValueError('Missing salt.')
+    if not password:
+        raise ValueError('Missing password.')
     key_len = AES_KEY_LEN // 8
     keys = _pbkdf2(_str_to_bytes(password), salt, 2 * key_len, expansion_count)
     return keys[:key_len], keys[key_len:]
