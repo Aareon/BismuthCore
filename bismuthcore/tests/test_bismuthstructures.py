@@ -8,7 +8,7 @@ import sys
 from decimal import Decimal, getcontext, ROUND_HALF_EVEN
 
 sys.path.append('../')
-from bismuthcore.transaction import Transaction
+from bismuthcore.bismuthcore.transaction import Transaction
 
 getcontext().rounding = ROUND_HALF_EVEN
 

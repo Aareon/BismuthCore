@@ -7,7 +7,7 @@ import sys
 
 sys.path.append('../')
 # from bismuthcore.clientcommands import ClientCommands
-from bismuthcore.bismuthconfig import BismuthConfig
+from bismuthcore.bismuthcore.bismuthconfig import BismuthConfig
 
 
 def test_create():

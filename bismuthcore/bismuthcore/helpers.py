@@ -12,7 +12,7 @@ from sys import version_info
 import requests
 from polysign.signerfactory import SignerFactory
 
-from bismuthcore.compat import quantize_eight
+from bismuthcore.bismuthcore.compat import quantize_eight
 
 __version__ = '0.0.8'
 

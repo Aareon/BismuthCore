@@ -1,7 +1,7 @@
 import pytest
 from time import time as ttime
-from bismuthcore.transaction import Transaction
-from bismuthcore.block import Block
+from bismuthcore.bismuthcore.transaction import Transaction
+from bismuthcore.bismuthcore.block import Block
 
 @pytest.fixture
 def setup_block():

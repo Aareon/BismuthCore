@@ -3,10 +3,10 @@
 Bismuth core Block Class
 """
 
-from bismuthcore.transaction import Transaction
-from bismuthcore.transactionslist import TransactionsList
+from bismuthcore.bismuthcore.transaction import Transaction
+from bismuthcore.bismuthcore.transactionslist import TransactionsList
 from typing import List
-from bismuthcore.helpers import address_validate, address_is_rsa
+from bismuthcore.bismuthcore.helpers import address_validate, address_is_rsa
 from time import time as ttime
 from polysign.signerfactory import SignerFactory
 

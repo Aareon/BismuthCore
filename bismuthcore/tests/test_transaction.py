@@ -1,5 +1,5 @@
 import pytest
-from bismuthcore.transaction import Transaction
+from bismuthcore.bismuthcore.transaction import Transaction
 
 def test_initialization():
     """Test the initialization of a Transaction."""

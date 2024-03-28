@@ -3,7 +3,7 @@
 Bismuth core Block Class
 """
 
-from bismuthcore.transaction import Transaction
+from bismuthcore.bismuthcore.transaction import Transaction
 from typing import List
 
 __version__ = "0.0.1"

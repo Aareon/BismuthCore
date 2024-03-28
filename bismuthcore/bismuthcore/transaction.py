@@ -12,7 +12,7 @@ from time import sleep
 
 from Cryptodome.Hash import SHA
 
-from bismuthcore.compat import quantize_two, quantize_eight
+from bismuthcore.bismuthcore.compat import quantize_two, quantize_eight
 
 __version__ = '0.0.12'
 

@@ -6,7 +6,7 @@ from os import path
 from pprint import pprint
 from sys import exc_info
 
-from bismuthcore.helpers import BismuthBase
+from bismuthcore.bismuthcore.helpers import BismuthBase
 
 __version__ = '0.0.4'
 
