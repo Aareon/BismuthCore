@@ -165,7 +165,7 @@ class BismuthNode(BismuthBase):
                 # use a timeout?
                 self._com_backend.close_client(self._clients[ip]['client'])
                 del self._clients[ip]
-                self.app_log.debug("Status: Threads at {} / {}".format(self.thread_count()))
+                self.app_log.debug("Status: Threads at {} / {}".format(*self.thread_count()))
             except Exception:
                 pass
 
