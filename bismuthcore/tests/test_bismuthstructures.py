@@ -26,7 +26,7 @@ TX = Transaction.from_legacy_params(block_height=1, timestamp=0.01,
 
 def test_create_transaction():
     """Can create a Transaction object"""
-    tx = Transaction()
+    _ = Transaction()
 
 
 def test_convert_amount():
