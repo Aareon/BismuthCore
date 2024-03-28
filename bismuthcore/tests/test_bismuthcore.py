@@ -4,10 +4,6 @@
 """Tests for `bismuthcore` package."""
 
 import pytest
-import sys
-
-sys.path.append('../')
-from bismuthcore.bismuthcore import BismuthNode
 
 # TODO
 

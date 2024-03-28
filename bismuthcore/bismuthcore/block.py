@@ -9,7 +9,6 @@ from typing import List
 from bismuthcore.helpers import address_validate, address_is_rsa
 from time import time as ttime
 from polysign.signerfactory import SignerFactory
-from base64 import b64decode, b64encode
 
 __version__ = "0.0.2"
 

@@ -3,7 +3,6 @@
 
 """Tests for `bismuthcore` package."""
 
-import pytest
 import random
 import sys
 from decimal import Decimal, getcontext, ROUND_HALF_EVEN
