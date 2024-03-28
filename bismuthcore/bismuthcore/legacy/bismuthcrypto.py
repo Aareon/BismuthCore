@@ -18,7 +18,7 @@ from Cryptodome.Hash import SHA
 from Cryptodome.PublicKey import RSA
 from Cryptodome.Signature import PKCS1_v1_5
 from os import path
-from bismuthclient.simplecrypt import *
+from bismuthcore.simplecrypt import decrypt
 
 __version__ = '0.0.21'
 
