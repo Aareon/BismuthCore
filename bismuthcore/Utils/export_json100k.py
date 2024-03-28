@@ -17,11 +17,11 @@ if __name__ == "__main__":
 
     try:
         remove('tx_dataset.json')
-    except:
+    except Exception:
         pass
     try:
         remove('tx_tuple_dataset.json')
-    except:
+    except Exception:
         pass
 
     with sqlite3.connect('../../../Bismuth-temp/static/ledger.db', timeout=1) as ledger:
