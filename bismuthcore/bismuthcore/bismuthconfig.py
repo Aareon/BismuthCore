@@ -109,25 +109,26 @@ class BismuthConfig(BismuthBase):
         if not path.exists(filename):
             return
         try:
-            for line in open(filename):
-                if '=' in line:
-                    left, right = map(str.strip,line.rstrip("\n").split("="))
-                    if left not in self._vars:
-                        # Warn for unknown param?
-                        continue
-                    params = self._vars[left]
-                    if params[0] == "int":
-                        right = int(right)
-                    elif params[0] == "list":
-                        right = [item.strip() for item in right.split(",")]
-                    elif params[0] == "bool":
-                        if right.lower() in ["false", "0", "", "no"]:
-                            right = False
+            with open(filename, "r") as f:
+                for line in f:
+                    if '=' in line:
+                        left, right = map(str.strip,line.rstrip("\n").split("="))
+                        if left not in self._vars:
+                            # Warn for unknown param?
+                            continue
+                        params = self._vars[left]
+                        if params[0] == "int":
+                            right = int(right)
+                        elif params[0] == "list":
+                            right = [item.strip() for item in right.split(",")]
+                        elif params[0] == "bool":
+                            if right.lower() in ["false", "0", "", "no"]:
+                                right = False
+                            else:
+                                right = True
                         else:
-                            right = True
-                    else:
-                        # treat as "str"
-                        pass
-                    setattr(self,left,right)
+                            # treat as "str"
+                            pass
+                        setattr(self,left,right)
         except Exception as e:
             self.app_log.error(f"Config: Error '{e}' reading '{filename}' config file.")
