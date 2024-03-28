@@ -54,7 +54,7 @@ class RpcConnection(object):
             self.sdef.settimeout(LTIMEOUT)
             # Make sure the packet is sent in one call
             sdata = str(json.dumps(data))
-            res = self.sdef.sendall(str(len(sdata)).encode("utf-8").zfill(slen)+sdata.encode("utf-8"))
+            _ = self.sdef.sendall(str(len(sdata)).encode("utf-8").zfill(slen)+sdata.encode("utf-8"))
             if self.raw:
                 print("sending raw:")
                 print(str(len(sdata)).encode("utf-8").zfill(slen)+sdata.encode("utf-8"))
@@ -97,7 +97,7 @@ class RpcConnection(object):
             if not data:
                 raise RuntimeError("Socket EOF")
             data = int(data)  # receive length
-        except socket.timeout as e:
+        except socket.timeout:
             self.sdef = None
             return ""
         try:
@@ -158,7 +158,7 @@ class RpcConnection(object):
         """Close the socket"""
         try:
             self.sdef.close()
-        except Exception as e:
+        except Exception:
             pass
 
 
